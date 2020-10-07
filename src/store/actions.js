@@ -10,9 +10,6 @@ export const setTradeResult = ({ state, commit }, tradeResult) => {
     "https://product-operations-9b4c7.firebaseio.com/trade-result.json",
     tradeData
   );
-  // .then((response) => {
-  //   console.log(response);
-  // });
 };
 
 export const getTradeResult = ({ commit }) => {

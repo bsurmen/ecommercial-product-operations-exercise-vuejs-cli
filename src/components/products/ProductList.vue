@@ -39,7 +39,21 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+
+export default {
+  computed: {
+    ...mapGetters(["getProducts"]),
+  },
+  methods: {
+    getCountClasses(count) {
+      return {
+        "btn-danger text-white": count == 0 || count == null,
+        "btn-success text-white": count > 0,
+      };
+    },
+  },
+};
 </script>
 
 <style scoped></style>

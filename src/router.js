@@ -11,7 +11,7 @@ const routes = [
   { path: "/", component: ProductList },
   { path: "/product-operations", component: ProductPurchase },
   { path: "/product-sale", component: ProductSell },
-  { path: "*", component: ProductList },
+  { path: "*", redirect: "/" },
 ];
 
 export const router = new VueRouter({

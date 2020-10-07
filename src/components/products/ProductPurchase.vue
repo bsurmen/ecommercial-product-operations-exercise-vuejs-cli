@@ -29,7 +29,7 @@
               v-model="product.price"
               type="number"
               class="form-control"
-              placeholder="price."
+              placeholder="price"
             />
           </div>
           <div class="form-group">
