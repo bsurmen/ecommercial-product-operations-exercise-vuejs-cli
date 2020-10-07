@@ -16,8 +16,25 @@ export default {
   },
   created() {
     this.$store.dispatch("getTradeResult");
+    this.$store.dispatch("initApp");
   },
 };
 </script>
 
-<style></style>
+<style>
+body {
+  background-color: #a7a0bb5c;
+}
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  transition: opacity 0.3s ease-out;
+}
+.fade-leave {
+}
+.fade-leave-active {
+  transition: opacity.3s ease-out;
+  opacity: 0;
+}
+</style>
