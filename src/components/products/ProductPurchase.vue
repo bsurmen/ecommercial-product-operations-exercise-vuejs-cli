@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <div class="loading" :style="isLoading">
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-6 offset-3 pt-3 card mt-5 shadow">
         <div class="card-body">
@@ -20,7 +26,7 @@
               v-model="product.count"
               type="number"
               class="form-control"
-              placeholder="quantity"
+              placeholder="quantity.."
             />
           </div>
           <div class="form-group">
@@ -29,21 +35,27 @@
               v-model="product.price"
               type="number"
               class="form-control"
-              placeholder="price"
+              placeholder="price.."
             />
           </div>
           <div class="form-group">
-            <label>Message</label>
+            <label>Description</label>
             <textarea
               v-model="product.description"
               cols="30"
               rows="5"
-              placeholder="message"
+              placeholder="description..."
               class="form-control"
             ></textarea>
           </div>
           <hr />
-          <button class="btn btn-primary" @click="saveProduct">Save</button>
+          <button
+            class="btn btn-primary"
+            :disabled="saveEnabled"
+            @click="saveProduct"
+          >
+            Save
+          </button>
         </div>
       </div>
     </div>
@@ -52,56 +64,69 @@
 
 <script>
 export default {
-    data() {
-      return {
-        product: {
-          title: "",
-          count: null,
-          price: null,
-          description: "",
-        },
-        saveButtonClicked: false
-      }
-    },
-    methods: {
-      saveProduct() {
-        this.saveButtonClicked = true;
-        this.$store.dispatch("saveProduct", this.product)
-      }
-    },
-    computed: {
-      saveEnabled() {
-        if (this.product.title.length > 0 && this.product.count > 0 && this.product.price > 0 && this.product.description.length > 0) {
-          return false;
-        } else {
-          return true;
-        }
+  data() {
+    return {
+      product: {
+        title: "",
+        count: null,
+        price: null,
+        description: "",
       },
-      isLoading() {
-        if (this.saveButtonClicked) {
-          return {
-            display: "block"
-          }
-        } else {
-          return {
-            display: "none"
-          }
-        }
+      saveButtonClicked: false,
+    };
+  },
+  methods: {
+    saveProduct() {
+      this.saveButtonClicked = true;
+      this.$store.dispatch("saveProduct", this.product);
+    },
+  },
+  computed: {
+    saveEnabled() {
+      if (
+        this.product.title.length > 0 &&
+        this.product.count > 0 &&
+        this.product.price > 0 &&
+        this.product.description.length > 0
+      ) {
+        return false;
+      } else {
+        return true;
       }
     },
-    beforeRouteLeave(to, from, next) {
-      if ((this.product.title.length > 0 || this.product.count > 0 || this.product.price > 0 || this.product.description.length > 0) && !this.saveButtonClicked) {
-        if (confirm("Kaydedilmemiş değişiklikler var. Yine de çıkmak istiyor musunuz?")) {
-          next();
-        } else {
-          next(false);
-        }
+    isLoading() {
+      if (this.saveButtonClicked) {
+        return {
+          display: "block",
+        };
       } else {
-        next();
+        return {
+          display: "none",
+        };
       }
+    },
+  },
+  beforeRouteLeave(to, from, next) {
+    if (
+      (this.product.title.length > 0 ||
+        this.product.count > 0 ||
+        this.product.price > 0 ||
+        this.product.description.length > 0) &&
+      !this.saveButtonClicked
+    ) {
+      if (
+        confirm(
+          "There are unsaved changes. Do you still want to leave the page?"
+        )
+      ) {
+        next();
+      } else {
+        next(false);
+      }
+    } else {
+      next();
     }
-  }
+  },
 };
 </script>
-
-<style scoped></style>
+<style></style>
