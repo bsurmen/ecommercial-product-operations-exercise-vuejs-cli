@@ -10,14 +10,14 @@
             v-if="getProducts.length > 0"
           >
             <thead>
-              <th>id</th>
+              <th>ID</th>
               <th>Product Name</th>
               <th>Quantity</th>
               <th>Price</th>
               <th>Description</th>
             </thead>
             <tbody>
-              <tr v-for="product in getProducts">
+              <tr v-for="product in getProducts" :key="product.title">
                 <td class="align-middle text-center">
                   <span class="badge badge-info"> {{ product.key }} </span>
                 </td>
@@ -54,6 +54,7 @@ export default {
   },
   methods: {
     getCountClasses(count) {
+      console.log(this.getProducts);
       return {
         "btn-danger text-white": count == 0 || count == null,
         "btn-success text-white": count > 0,

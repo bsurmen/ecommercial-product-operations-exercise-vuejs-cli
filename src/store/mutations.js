@@ -6,5 +6,5 @@ export const updateTradeResult = (state, payload) => {
     state.purchase += parseFloat(payload.purchase);
     state.sale += parseFloat(payload.sale);
   }
-  state.balance = parseFloat(payload.sale) - parseInt(payload.purchase);
+  state.balance = parseFloat(state.sale) - parseFloat(state.purchase);
 };

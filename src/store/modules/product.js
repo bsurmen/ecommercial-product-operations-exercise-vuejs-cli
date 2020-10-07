@@ -25,7 +25,6 @@ const mutations = {
 
 const actions = {
   initApp({ commit }) {
-    // Vue Resource Operations
     Vue.http
       .get("https://product-operations-9b4c7.firebaseio.com/products.json")
       .then((response) => {
@@ -36,10 +35,7 @@ const actions = {
         }
       });
   },
-
   saveProduct({ dispatch, commit }, product) {
-    // Vue Resource Operations
-
     Vue.http
       .post(
         "https://product-operations-9b4c7.firebaseio.com/products.json",
@@ -48,6 +44,7 @@ const actions = {
       .then((response) => {
         product.key = response.body.name;
         commit("updateProductList", product);
+
         let tradeResult = {
           purchase: product.price,
           sale: 0,
@@ -58,7 +55,6 @@ const actions = {
       });
   },
   sellProduct({ state, dispatch }, payload) {
-    // Vue Resource Operations
     let product = state.products.filter((element) => {
       return element.key == payload.key;
     });
@@ -67,8 +63,9 @@ const actions = {
       let totalCount = product[0].count - payload.count;
       Vue.http
         .patch(
-          "https://product-operations-9b4c7.firebaseio.com/products.json",
-          +payload.key + ".json",
+          "https://product-operations-9b4c7.firebaseio.com/products/" +
+            payload.key +
+            ".json",
           { count: totalCount }
         )
         .then(() => {

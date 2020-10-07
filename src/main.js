@@ -9,11 +9,8 @@ Vue.config.productionTip = false;
 Vue.use(VueResource);
 
 Vue.filter("currency", (value) => {
-  return parseFloat(value).toLocaleString(
-    undefined,
-    { minimumFractionDigits: 2 } + " TL"
-  );
-});
+  return parseFloat(value).toLocaleString(undefined, { minimumFractionDigits : 2}) + " $"
+})
 
 new Vue({
   router,
