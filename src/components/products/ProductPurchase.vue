@@ -52,21 +52,55 @@
 
 <script>
 export default {
-  data() {
-    return {
-      product: {
-        title: "",
-        count: null,
-        price: null,
-        description: "",
-      },
-    };
-  },
-  methods: {
-    saveProduct() {
-      this.$store.dispatch("saveProduct", this.product);
+    data() {
+      return {
+        product: {
+          title: "",
+          count: null,
+          price: null,
+          description: "",
+        },
+        saveButtonClicked: false
+      }
     },
-  },
+    methods: {
+      saveProduct() {
+        this.saveButtonClicked = true;
+        this.$store.dispatch("saveProduct", this.product)
+      }
+    },
+    computed: {
+      saveEnabled() {
+        if (this.product.title.length > 0 && this.product.count > 0 && this.product.price > 0 && this.product.description.length > 0) {
+          return false;
+        } else {
+          return true;
+        }
+      },
+      isLoading() {
+        if (this.saveButtonClicked) {
+          return {
+            display: "block"
+          }
+        } else {
+          return {
+            display: "none"
+          }
+        }
+      }
+    },
+    beforeRouteLeave(to, from, next) {
+      if ((this.product.title.length > 0 || this.product.count > 0 || this.product.price > 0 || this.product.description.length > 0) && !this.saveButtonClicked) {
+        if (confirm("Kaydedilmemiş değişiklikler var. Yine de çıkmak istiyor musunuz?")) {
+          next();
+        } else {
+          next(false);
+        }
+      } else {
+        next();
+      }
+    }
+  }
 };
 </script>
 
